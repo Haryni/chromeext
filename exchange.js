@@ -5,7 +5,10 @@ document.addEventListener("DOMContentLoaded", function () {
   var resultEl = document.getElementById("result");
 
   convertBtn.addEventListener("click", function () {
-    var amount = parseFloat(amountEl.value);
+    // disable button while fetching to prevent duplicate requests
+    convertBtn.disabled = true;
+
+    var amount = parseFloat((amountEl.value || "").trim());
     var from = currencyEl.value;
 
     if (isNaN(amount) || amount <= 0) {
@@ -54,6 +57,10 @@ document.addEventListener("DOMContentLoaded", function () {
         var msg = err && err.message ? err.message : String(err);
         var stack = err && err.stack ? "\n" + err.stack : "";
         resultEl.innerText = "Error fetching exchange rate: " + msg + stack;
+      })
+      .then(function () {
+        // re-enable the button after the request completes (success or error)
+        convertBtn.disabled = false;
       });
   });
 });
