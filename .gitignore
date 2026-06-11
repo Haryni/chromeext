@@ -1,0 +1,9 @@
+# Ignore local environment and secrets
+.env
+api_key.js
+
+# OS files
+.DS_Store
+
+# Node
+node_modules/
